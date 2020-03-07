@@ -6,12 +6,12 @@
 *int getHigh()* - Returns the high endpoint of the interval.
 
 ## Node
-*Node getParent* - Returns the parent of this node.
-*Node getLeft()* - Returns the left child of this node.
-*Node getRight()* - Returns the right child of this node.
-*Interval getInterv()* - Returns the interval object stored in this node.
-*int getIMax()* - Returns the value of the imax field of this node.
-*int getPriority()* - Returns the priority of this node.
+* *Node getParent* - Returns the parent of this node.
+* *Node getLeft()* - Returns the left child of this node.
+* *Node getRight()* - Returns the right child of this node.
+* *Interval getInterv()* - Returns the interval object stored in this node.
+* *int getIMax()* - Returns the value of the imax field of this node.
+* *int getPriority()* - Returns the priority of this node.
 
 ## Interval Treap
 *Treap()*- Constructor with no parameters.
