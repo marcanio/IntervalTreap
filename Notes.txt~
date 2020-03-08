@@ -1,0 +1,22 @@
+Overview~
+
+>Interval database: A dynamic set of elements with each element containing an
+interval (x.interv).
+	-IntervalInsert(x): Adds X with refrence to X.interv
+	-IntervalDelete(x): Remove X
+	-IntervalSearch(i): Returns ref. to X where X.interv overlaps interv i
+------------
+Data Structure~
+
+>Object i: An interval [a,b] with attributes i.low (Low endpoint) & i.high.
+	-Interval Trichotomy(overlap): If the interaction of the two objects!=null 
+>Fact: Any two intervals satisfy exactly ONE of the three
+	-Overlap
+	-One is smaller
+	-One is larger
+>Inorder tree walk: Intervals sorted by low end point
+>Interval Search: Finds an overlapping interval. Always Checks left tree
+	-If (X.left != null && x.left.imax >= i.low) LEFT
+	-If (x.left.imax < i.low) RIGHT
+
+
