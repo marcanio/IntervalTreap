@@ -30,7 +30,7 @@ public class Node {
     /*Returns the interval object stored in this node*/
     public Interval getInterv(){
         //Interval test= 0;
-        //return test;
+        return i;
     }
 
     /*Returns the value of imax field of this node*/
