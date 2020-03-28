@@ -3,7 +3,6 @@ import java.util.Random;
 import java.lang.*;
 /*Represents the actual nodes in the tree*/
 public class Node {
-    Node root;
     Interval interval;
     int priority;
     private Node left,right,parent;

@@ -1,16 +1,16 @@
 package Interval_Treap;
 /*This is the big boi*/
 public class IntervalTreap {
-    Node test;
+    Node root;
 
     /*Constructor*/
     public IntervalTreap(){
-
+        root = null;
     }
 
     /*Returns the root node*/
     public Node getRoot(){
-        return test;
+        return root;
     }
 
     /*Returns the number of nodes in the treap*/
@@ -25,6 +25,12 @@ public class IntervalTreap {
 
     /*Adds node z and refrences interv to the interval treap. O(log(n))*/
     public void intervalInsert(Node z){
+        if(this.root == null ){
+            this.root = z;
+        }
+        /* phase 1: insert based on z.key which is equal to z.getInterv().getLow(), like binary tree */
+
+        /* phase 2: rotate based on priority *?
 
     }
 
@@ -35,6 +41,6 @@ public class IntervalTreap {
 
     /*Returns a refrence to a node in a certain interval O(log(n))*/
     public Node intervalSearch(Interval i){
-        return test;
+        return null;    //TODO: dont return null
     }
 }
