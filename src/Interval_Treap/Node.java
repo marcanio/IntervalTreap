@@ -6,11 +6,16 @@ public class Node {
     Node root;
     Interval interval;
     int priority;
+    private Node left,right,parent;
 
     /*Constructor takes object i as param and generates priority*/
     Node (Interval i){
         Random rand = new Random();
         int priorityTemp = rand.nextInt(Integer.MAX_VALUE);
+
+        this.left = null;
+        this.right = null;
+        this.parent = null;
 
         /*init*/
         this.priority = priorityTemp;
@@ -19,36 +24,32 @@ public class Node {
 
     /*Returns the parent of the node*/
     public Node getParent(){
-        Node test = root;
-        return test;
+        return parent;
     }
 
     /*Return the left child of the node*/
     public Node getLeft(){
-        Node test = root;
-        return test;
+        return left;
     }
 
     /*Return the right child of the node*/
     public Node getRight(){
-        Node test = root;
-        return test;
+        return right;
     }
 
     /*Returns the interval object stored in this node*/
     public Interval getInterv(){
-        //Interval test= 0;
         return interval;
     }
 
     /*Returns the value of imax field of this node*/
     public int getIMax(){
-        return 0;
+        return interval.getHigh();
     }
 
     /*Returns the priority of this node*/
     public int getPriority(){
-        return 0;
+        return priority;
     }
 
 }
