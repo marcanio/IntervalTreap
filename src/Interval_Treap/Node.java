@@ -1,12 +1,20 @@
 package Interval_Treap;
+import java.util.Random;
+import java.lang.*;
 /*Represents the actual nodes in the tree*/
 public class Node {
     Node root;
-    Interval i;
+    Interval interval;
+    int priority;
 
     /*Constructor takes object i as param and generates priority*/
     Node (Interval i){
+        Random rand = new Random();
+        int priorityTemp = rand.nextInt(Integer.MAX_VALUE);
 
+        /*init*/
+        this.priority = priorityTemp;
+        interval = i;
     }
 
     /*Returns the parent of the node*/
@@ -30,7 +38,7 @@ public class Node {
     /*Returns the interval object stored in this node*/
     public Interval getInterv(){
         //Interval test= 0;
-        return i;
+        return interval;
     }
 
     /*Returns the value of imax field of this node*/
