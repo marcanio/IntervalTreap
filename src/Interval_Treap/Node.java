@@ -2,6 +2,7 @@ package Interval_Treap;
 /*Represents the actual nodes in the tree*/
 public class Node {
     Node root;
+    Interval i;
 
     /*Constructor takes object i as param and generates priority*/
     Node (Interval i){
@@ -27,10 +28,10 @@ public class Node {
     }
 
     /*Returns the interval object stored in this node*/
-    //public Interval getInterv(){
+    public Interval getInterv(){
         //Interval test= 0;
         //return test;
-    //}
+    }
 
     /*Returns the value of imax field of this node*/
     public int getIMax(){
