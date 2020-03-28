@@ -30,7 +30,7 @@ public class IntervalTreap {
         }
         /* phase 1: insert based on z.key which is equal to z.getInterv().getLow(), like binary tree */
 
-        /* phase 2: rotate based on priority *?
+        /* phase 2: rotate based on priority */
 
     }
 
@@ -41,6 +41,6 @@ public class IntervalTreap {
 
     /*Returns a refrence to a node in a certain interval O(log(n))*/
     public Node intervalSearch(Interval i){
-        return null;    //TODO: dont return null
+        return root;    //TODO
     }
 }
