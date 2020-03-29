@@ -36,6 +36,21 @@ public class Node {
         return right;
     }
 
+    /*Sets the parent of a node*/
+    public void setParent(Node z){
+        parent = z;
+    }
+
+    /*Sets the left child of a node*/
+    public void setLeft(Node z){
+        left = z;
+    }
+
+    /*Sets the right child of a node*/
+    public void setRight(Node z){
+        right = z;
+    }
+
     /*Returns the interval object stored in this node*/
     public Interval getInterv(){
         return interval;
