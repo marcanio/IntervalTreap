@@ -4,7 +4,7 @@ import java.lang.*;
 /*Represents the actual nodes in the tree*/
 public class Node {
     Interval interval;
-    int priority;
+    int priority, imax;
     private Node left,right,parent;
 
     /*Constructor takes object i as param and generates priority*/
@@ -18,6 +18,7 @@ public class Node {
 
         /*init*/
         this.priority = priorityTemp;
+        this.imax = interval.getHigh();
         interval = i;
     }
 
@@ -59,7 +60,12 @@ public class Node {
     /*Returns the value of imax field of this node*/
     //TODO Change the high value to be the highest interval including childs
     public int getIMax(){
-        return interval.getHigh();
+        return this.imax;
+    }
+
+    /*Sets the value of imax field of this node*/
+    public void setIMax(int imax){
+        this.imax = imax;
     }
 
     /*Returns the priority of this node*/
