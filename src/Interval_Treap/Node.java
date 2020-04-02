@@ -57,6 +57,7 @@ public class Node {
     }
 
     /*Returns the value of imax field of this node*/
+    //TODO Change the high value to be the highest interval including childs
     public int getIMax(){
         return interval.getHigh();
     }

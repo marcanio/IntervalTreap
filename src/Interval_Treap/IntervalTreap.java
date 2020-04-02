@@ -62,4 +62,15 @@ public class IntervalTreap {
     public Node intervalSearch(Interval i){
         return root;    //TODO
     }
+
+    /*Helper method to Right rotate*/
+    public Node rightRotate(Node z){
+
+        return root;
+    }
+
+    /*Helper method to Left rotate*/
+    public Node leftRotate(Node z){
+        return root;
+    }
 }
