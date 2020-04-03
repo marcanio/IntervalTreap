@@ -18,9 +18,14 @@ public class Main {
 
         treap.intervalInsert(node1);
         treap.intervalInsert(node2);
-        //treap.intervalInsert(node3);
-        //treap.intervalInsert(node4);
-        System.out.println(treap.getRoot().imax);
+        treap.intervalInsert(node3);
+        treap.intervalInsert(node4);
+
+        //System.out.println("1. " + node1.priority + " Imax:" + node1.getIMax() + "Parent:" + node1.getParent());
+        //System.out.println("2. " + node2.priority + " Imax:" + node2.getIMax() + "Parent:" + node2.getParent());
+        //System.out.println("3. " + node3.priority + " Imax:" + node3.getIMax() + "Parent:" + node3.getParent());
+       //System.out.println("1. " + node1.priority + " Imax:" + node1.getIMax());
+        System.out.println("Root: " + treap.root.interval.getLow());
     }
 
 

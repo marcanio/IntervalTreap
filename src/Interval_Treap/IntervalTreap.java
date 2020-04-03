@@ -28,55 +28,57 @@ public class IntervalTreap {
     /*Adds node z and refrences interv to the interval treap. O(log(n))*/
 
     public void intervalInsert(Node z){
-        Node tempNode = null;
-        Node tempRoot = this.root;
+        Node y = null;
+        Node x = this.root;
 
         /* phase 1: insert based on z.key which is equal to z.getInterv().getLow(), like binary tree */
-        while(tempRoot != null){
-            tempNode = tempRoot;
-            if(z.getInterv().getLow() < tempRoot.getInterv().getLow()){
-                tempRoot = tempRoot.getLeft();
+        while(x != null){
+            y = x;
+            if(z.getInterv().getLow() < x.getInterv().getLow()){
+                x = x.getLeft();
             }else{
-                tempRoot = tempRoot.getRight();
+                x = x.getRight();
             }
         }
-        z.setParent(tempNode);
-        if(tempRoot == null ){
+        z.setParent(y);
+        if(y == null ){
             this.root = z;
-        }else if(z.getInterv().getLow() < tempNode.getInterv().getLow()){
-            tempNode.setLeft(z);
+        }else if(z.getInterv().getLow() < y.getInterv().getLow()){
+            y.setLeft(z);
         }else{
-            tempNode.setRight(z);
+            y.setRight(z);
         }
 
+
         /* phase 2: rotate based on priority */
-        while(z.getParent()!= null){    //TODO: fix condition
+        while(z.getParent()!= null ){    //TODO: fix condition
             boolean rotate = (z.getPriority() < z.getParent().getPriority());
-            int leftOrRight = 2;   //if unchanged, don't need to update imax, right = 0 and left = 1
+            int leftOrRight;   //right = 0 and left = 1
             if(rotate && (z.getParent().getLeft()== z)){
                 rightRotate(z);
                 leftOrRight = 0;   //right child of z needs imax update
             }else if(rotate && (z.getParent().getRight() == z)){
                 leftRotate(z);
                 leftOrRight = 1;   //left child of z needs imax updat
+            }else{
+                break;
             }
 
-            if((leftOrRight != 2)) {        //update Imax
-                if(leftOrRight == 0){  //right
-                    Node right = z.getRight();
-                    //update right child's imax
-                    updateImax(right);
-                    // update z's imax
-                    updateImax(z);
-                }
-                else if(leftOrRight == 1) {  //left
-                    Node left = z.getLeft();
-                    //update right child's imax
-                    updateImax(left);
-                    // update z's imax
-                    updateImax(z);
-                }
+            if(leftOrRight == 0){  //right
+                Node right = z.getRight();
+                //update right child's imax
+                updateImax(right);
+                // update z's imax
+                updateImax(z);
             }
+            else if(leftOrRight == 1) {  //left
+                Node left = z.getLeft();
+                //update right child's imax
+                updateImax(left);
+                // update z's imax
+                updateImax(z);
+            }
+
         }
 
     }
