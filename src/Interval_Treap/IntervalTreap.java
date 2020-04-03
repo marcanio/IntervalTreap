@@ -5,12 +5,12 @@ public class IntervalTreap {
 
     /*Constructor*/
     public IntervalTreap(){
-        root = null;
+        this.root = null;
     }
 
     /*Returns the root node*/
     public Node getRoot(){
-        return root;
+        return this.root;
     }
 
     /*Returns the number of nodes in the treap*/
@@ -29,7 +29,7 @@ public class IntervalTreap {
 
     public void intervalInsert(Node z){
         Node tempNode = null;
-        Node tempRoot = root;
+        Node tempRoot = this.root;
 
         /* phase 1: insert based on z.key which is equal to z.getInterv().getLow(), like binary tree */
         while(tempRoot != null){
@@ -51,6 +51,7 @@ public class IntervalTreap {
 
         /* phase 2: rotate based on priority */
 
+
     }
 
     /*Removes node z from the tree O(log(n))*/
@@ -64,13 +65,47 @@ public class IntervalTreap {
     }
 
     /*Helper method to Right rotate*/
-    public Node rightRotate(Node z){
+    //TODO: Check for overwritting on the last if statement
+    public void rightRotate(Node x){
 
-        return root;
+        Node y = x.getParent();
+        y.setLeft(x.getRight());
+        if(x.getRight() != null){
+            Node tempRight = x.getRight();
+            tempRight.setParent(y);
+        }
+        x.setParent(y.getParent());
+        Node tempParent = y.getParent();
+        if(y.getParent() == null){
+            this.root = x;
+        }else if (y == y.getParent().getRight()){
+            tempParent.setRight(x);
+        }else{
+            tempParent.setLeft(x);
+        }
+        x.setRight(y);
+        y.setParent(x);
     }
 
     /*Helper method to Left rotate*/
-    public Node leftRotate(Node z){
-        return root;
+    //TODO: Check for overwritting on the last if statement
+    public void leftRotate(Node x){
+        Node y = x.getParent();
+        y.setRight(x.getLeft());
+        if(x.getLeft() != null){
+            Node tempLeft = x.getLeft();
+            tempLeft.setParent(y);
+        }
+        x.setParent(y.getParent());
+        Node tempParent = y.getParent();
+        if(y.getParent() == null){
+            this.root = x;
+        }else if(y == y.getParent().getLeft()){
+            tempParent.setLeft(x);
+        }else{
+            tempParent.setRight(x);
+        }
+        x.setLeft(y);
+        y.setParent(x);
     }
 }
