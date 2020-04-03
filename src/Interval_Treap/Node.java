@@ -18,8 +18,10 @@ public class Node {
 
         /*init*/
         this.priority = priorityTemp;
-        this.imax = interval.getHigh();
         interval = i;
+        this.imax = interval.getHigh();
+
+
     }
 
     /*Returns the parent of the node*/
