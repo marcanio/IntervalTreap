@@ -129,15 +129,59 @@ public class IntervalTreap {
 
     /*Removes node z from the tree O(log(n))*/
     public void intervalDelete(Node z){
+        Node temp = root;
         //Phase 1
-
-
         //Z has no left child
+        if(z.getLeft() == null){
+            if(z.getRight() != null){
+                z.getRight().setParent(z.getParent());
+            }
+            if(z.getParent().getRight() == z ){
+                z.getParent().setRight(z.getRight());
+            }else{
+                z.getParent().setLeft(z.getRight());
+            }
+        }else if(z.getRight() == null){ //Has left child
+            if(z.getLeft() != null){
+                z.getLeft().setParent(z.getParent());
+            }
+            if(z.getParent().getRight() == z ){
+                z.getParent().setRight(z.getLeft());
+            }else{
+                z.getParent().setLeft(z.getLeft());
+            }
+        }else{ //Z has two children
+            Node replace = minimum(z.getRight());
+            if(z.getParent().getRight() == z){
+                z.getParent().setRight(replace);
+            }else{
+                z.getParent().setLeft(replace);
+            }
+
+            z.getLeft().setParent(replace);
+
+            if(z.getRight() != replace){
+                z.getRight().setParent(replace);
+            }
+            replace.setLeft(z.getLeft());
+            replace.setRight(z.getRight());
+            if(replace.getParent() != z){
+                replace.getParent().setLeft(null);
+            }
+            replace.setParent(z.getParent());
+        }
+
+        //Phase 2
 
 
-        //Z has a left child
+    }
 
-        //Z has two children
+    /*gets the minimum*/
+    public Node minimum(Node z){
+        while(z.getLeft() != null){
+            z = z.getLeft();
+        }
+        return z;
     }
 
     /*Returns a reference to a node in a certain interval O(log(n))*/

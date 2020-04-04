@@ -63,7 +63,14 @@ public class Main {
             sorry4 = node4.getParent().interval.getLow();
         }
         System.out.println("4. " + node4.priority + " Imax:" + node4.getIMax() +" "+ sorry4);
+
+
         System.out.println("Root: " + treap.root.interval.getLow());
+        treap.intervalDelete(node1);
+        treap.intervalDelete(node2);
+
+
+        System.out.println();
         System.out.println(treap.getSize());
         System.out.println(treap.getHeight());
         System.out.println(treap.intervalSearch(interval3).priority);
