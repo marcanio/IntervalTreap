@@ -28,7 +28,7 @@ public class IntervalTreap {
     /*Adds node z and refrences interv to the interval treap. O(log(n))*/
 
     public void intervalInsert(Node z){
-        Node y = null;
+         Node y = null;
         Node x = this.root;
 
         /* phase 1: insert based on z.key which is equal to z.getInterv().getLow(), like binary tree */
