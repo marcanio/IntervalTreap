@@ -15,9 +15,20 @@ public class IntervalTreap {
 
     /*Returns the number of nodes in the treap*/
     public int getSize(){
-        //TODO
-        return 0;
+
+        Node temp = root;
+        return size(temp);
     }
+
+    /*Recursively count nodes in the tree */
+    public int size(Node temp){
+        if(temp == null){
+           return 0;
+        }else{
+            return(size(temp.getLeft()) + 1 + size(temp.getRight()));
+        }
+    }
+
 
     /*Returns the height*/
     public int getHeight(){

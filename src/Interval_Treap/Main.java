@@ -1,7 +1,7 @@
 package Interval_Treap;
 
 public class Main {
-
+    //TODO test if IMax updates
     public static void main(String[] args) {
         Interval interval1 = new Interval(5,7);
         Interval interval2 = new Interval(3,4);
@@ -63,6 +63,7 @@ public class Main {
         }
         System.out.println("4. " + node4.priority + " Imax:" + node4.getIMax() +" "+ sorry4);
         System.out.println("Root: " + treap.root.interval.getLow());
+        System.out.println(treap.getSize());
     }
 
 
