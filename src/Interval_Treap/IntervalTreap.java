@@ -2,6 +2,7 @@ package Interval_Treap;
 /*This is the big boi*/
 public class IntervalTreap {
     Node root;
+    int globalRotate;
 
     /*Constructor*/
     public IntervalTreap(){
@@ -180,12 +181,15 @@ public class IntervalTreap {
         //Phase 2:
 
         if(rightORleft == 1){ //Right
-
-            DeleteUpdateImax(replace.imax, replace.getRight() );
-
             if(replace.getRight().priority < replace.priority){
                 leftRotate(replace);
+                globalRotate = 1;
+                DeleteUpdateImax(replace.imax, replace.getParent());
+            }else{
+                globalRotate = 0;
+                DeleteUpdateImax(replace.imax, replace);
             }
+
         }else if(rightORleft == 0) {//Left
             if(replace.getLeft().priority < replace.priority){
                 rightRotate(replace);
@@ -195,7 +199,21 @@ public class IntervalTreap {
 
     /*Updates the trees IMax after a delete*/
     public int DeleteUpdateImax(int imax, Node z){
-        
+        if(z.getIMax()!=imax || (imax == z.getInterv().getHigh() && globalRotate==1)){
+            z.setIMax(z.getIMax());
+            return z.getIMax();
+        }else {
+            if (z.getRight() != null && z.getLeft() != null) {
+                z.setIMax(Math.max(DeleteUpdateImax(imax, z.getRight()), DeleteUpdateImax(imax, z.getLeft())));
+            }else if(z.getLeft() == null){
+                z.setIMax(DeleteUpdateImax(imax, z.getRight()));
+            }else if (z.getRight() == null){
+
+            }else{  //has no children now
+                z.setIMax(z.getInterv().getHigh());
+            }
+            return 0;
+        }
     }
 
     /*gets the minimum*/
