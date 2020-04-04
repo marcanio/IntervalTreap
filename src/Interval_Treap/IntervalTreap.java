@@ -51,7 +51,7 @@ public class IntervalTreap {
 
 
         /* phase 2: rotate based on priority */
-        while(z.getParent()!= null ){    //TODO: fix condition
+        while(z.getParent()!= null ){
             boolean rotate = (z.getPriority() < z.getParent().getPriority());
             int leftOrRight;   //right = 0 and left = 1
             if(rotate && (z.getParent().getLeft()== z)){
@@ -78,10 +78,15 @@ public class IntervalTreap {
                 // update z's imax
                 updateImax(z);
             }
-
+        }
+        //update Imax for nodes above inserted node
+        Node curr = z;
+        while(curr.getParent()!= null ){
+            curr = curr.getParent();
+            updateImax(curr);
         }
 
-    }
+        }
     public void updateImax(Node z){
         if(z.getRight() != null && z.getLeft() != null){    //both children exist
             int zChildImax = Math.max(z.getRight().getIMax(), z.getLeft().getIMax());
@@ -128,7 +133,6 @@ public class IntervalTreap {
     }
 
     /*Helper method to Left rotate*/
-    //TODO: Check for overwritting on the last if statement
     public void leftRotate(Node x){
         Node y = x.getParent();
         y.setRight(x.getLeft());
