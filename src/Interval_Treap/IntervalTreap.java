@@ -32,8 +32,24 @@ public class IntervalTreap {
 
     /*Returns the height*/
     public int getHeight(){
-        //TODO
-        return 0;
+        Node temp = root;
+        return height(temp);
+    }
+
+    /*Recursivley finds the height of the tree*/
+    public int height(Node temp){
+        if(temp == null){
+            return -1;
+         }
+        int leftH = height(temp.getLeft());
+        int rightH = height(temp.getRight());
+
+        if(leftH > rightH){
+            return leftH +1;
+        }else{
+            return rightH + 1;
+        }
+
     }
 
     /*Adds node z and refrences interv to the interval treap. O(log(n))*/
@@ -113,12 +129,30 @@ public class IntervalTreap {
 
     /*Removes node z from the tree O(log(n))*/
     public void intervalDelete(Node z){
-        //TODO
+        //Phase 1
+
+
+        //Z has no left child
+
+
+        //Z has a left child
+
+        //Z has two children
     }
 
     /*Returns a reference to a node in a certain interval O(log(n))*/
     public Node intervalSearch(Interval i){
-        return root;    //TODO
+        Node temp = root;
+        while(temp != null){
+            if(temp.getInterv().equals(i)){
+                return temp;
+            }else if(temp.getInterv().getLow() < i.getLow()){
+                temp = temp.getRight();
+            }else{
+                temp = temp.getLeft();
+            }
+        }
+        return temp;
     }
 
     /*Helper method to Right rotate*/
