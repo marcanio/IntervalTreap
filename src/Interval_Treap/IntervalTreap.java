@@ -130,10 +130,13 @@ public class IntervalTreap {
     /*Removes node z from the tree O(log(n))*/
     public void intervalDelete(Node z){
         Node temp = root;
+        Node replace = minimum(z.getRight());
+        int rightORleft = 2; // 1 - Right, 0 - left
         //Phase 1
         //Z has no left child
         if(z.getLeft() == null){
             if(z.getRight() != null){
+                rightORleft = 1;
                 z.getRight().setParent(z.getParent());
             }
             if(z.getParent().getRight() == z ){
@@ -143,6 +146,7 @@ public class IntervalTreap {
             }
         }else if(z.getRight() == null){ //Has left child
             if(z.getLeft() != null){
+                rightORleft = 0;
                 z.getLeft().setParent(z.getParent());
             }
             if(z.getParent().getRight() == z ){
@@ -151,10 +155,12 @@ public class IntervalTreap {
                 z.getParent().setLeft(z.getLeft());
             }
         }else{ //Z has two children
-            Node replace = minimum(z.getRight());
+
             if(z.getParent().getRight() == z){
+                rightORleft =1;
                 z.getParent().setRight(replace);
             }else{
+                rightORleft =0;
                 z.getParent().setLeft(replace);
             }
 
@@ -171,9 +177,25 @@ public class IntervalTreap {
             replace.setParent(z.getParent());
         }
 
-        //Phase 2
+        //Phase 2:
 
+        if(rightORleft == 1){ //Right
 
+            DeleteUpdateImax(replace.imax, replace.getRight() );
+
+            if(replace.getRight().priority < replace.priority){
+                leftRotate(replace);
+            }
+        }else if(rightORleft == 0) {//Left
+            if(replace.getLeft().priority < replace.priority){
+                rightRotate(replace);
+            }
+        }
+    }
+
+    /*Updates the trees IMax after a delete*/
+    public int DeleteUpdateImax(int imax, Node z){
+        
     }
 
     /*gets the minimum*/
