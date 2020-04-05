@@ -10,7 +10,9 @@ public class Node {
     /*Constructor takes object i as param and generates priority*/
     Node (Interval i){
         Random rand = new Random();
-        int priorityTemp = rand.nextInt(100000);
+        //Todo change this all the time
+        //Integer.MAX_VALUE
+        int priorityTemp = rand.nextInt(Integer.MAX_VALUE);
 
         this.left = null;
         this.right = null;

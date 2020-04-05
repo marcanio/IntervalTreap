@@ -1,4 +1,7 @@
 package Interval_Treap;
+
+import org.jetbrains.annotations.NotNull;
+
 /*This is the big boi*/
 public class IntervalTreap {
     Node root;
@@ -132,71 +135,58 @@ public class IntervalTreap {
 
     /*Removes node z from the tree O(log(n))*/
     public void intervalDelete(Node z){
-        Node temp = root;
-        Node replace = minimum(z.getRight());
-        int rightORleft = 2; // 1 - Right, 0 - left
-        //Phase 1
-        //Z has no left child
-        if(z.getLeft() == null){
+
+
+        //No children & root deletion
+        if(z.getLeft() == null && z.getRight() == null){
+            z = null;
+            root = null;
+        } else if(z.getLeft() != null && z.getRight() != null){ // has two children
+            //Find successor
+            Node successor = z;
             if(z.getRight() != null){
-                rightORleft = 1;
-                z.getRight().setParent(z.getParent());
-            }
-            if(z.getParent().getRight() == z ){
-                z.getParent().setRight(z.getRight());
-            }else{
-                z.getParent().setLeft(z.getRight());
-            }
-        }else if(z.getRight() == null){ //Has left child
-            if(z.getLeft() != null){
-                rightORleft = 0;
-                z.getLeft().setParent(z.getParent());
-            }
-            if(z.getParent().getRight() == z ){
-                z.getParent().setRight(z.getLeft());
-            }else{
-                z.getParent().setLeft(z.getLeft());
-            }
-        }else{ //Z has two children
-
-            if(z.getParent().getRight() == z){
-                rightORleft =1;
-                z.getParent().setRight(replace);
-            }else{
-                rightORleft =0;
-                z.getParent().setLeft(replace);
+                successor = minimum(z.getRight());
             }
 
-            z.getLeft().setParent(replace);
+            if(z.getParent() != null) {//Not root
+                successor.setParent(z.getParent());
+                if(z.getParent().getRight() == z){
+                    z.getParent().setRight(successor);
+                }else if(z.getParent().getLeft() == z){
+                    z.getParent().setLeft(successor);
+                }
+            }
+            //regardless of root or not
+            //set up for new left
+            successor.setLeft(z.getLeft());
+            z.getLeft().setParent(successor);
+            //set up for new right
+            if(z.getRight() != successor){
+                successor.setRight(z.getRight());
+                z.getRight().setParent(successor);
+            }
+            while(successor.getLeft() != null){
+                if(successor.getLeft().priority < successor.priority){
+                    rightRotate(successor);
+                }else{
+                    break;
+                }
+            }
+        }else{
+            //TODO Check attruibutrs of z
+            Node child = (z.getLeft() != null) ? z.getLeft(): z.getRight();
+            if(z.getParent() != null) {//Not root
+                child.setParent(z.getParent());
+            }else{ //Root
+                child.setParent(null);
+            }
+            z = child;
 
-            if(z.getRight() != replace){
-                z.getRight().setParent(replace);
-            }
-            replace.setLeft(z.getLeft());
-            replace.setRight(z.getRight());
-            if(replace.getParent() != z){
-                replace.getParent().setLeft(null);
-            }
-            replace.setParent(z.getParent());
         }
 
-        //Phase 2:
+        //Phase 2: Rotates & update Imax
 
-        if(rightORleft == 1){ //Right
-            if(replace.getRight().priority < replace.priority){
-                leftRotate(replace);
-                globalRotate = 1;
-                DeleteUpdateImax(replace.imax, replace.getParent());
-            }else{
-                globalRotate = 0;
-                DeleteUpdateImax(replace.imax, replace);
-            }
 
-        }else if(rightORleft == 0) {//Left
-            if(replace.getLeft().priority < replace.priority){
-                rightRotate(replace);
-            }
-        }
     }
 
     /*Updates the trees IMax after a delete*/
@@ -247,8 +237,8 @@ public class IntervalTreap {
         Node y = x.getParent();
         y.setLeft(x.getRight());
         if(x.getRight() != null){
-            Node tempRight = x.getRight();
-            tempRight.setParent(y);
+            //Node tempRight = x.getRight();
+            x.getRight().setParent(y);
         }
         x.setParent(y.getParent());
         //Node tempParent = y.getParent();
@@ -268,8 +258,8 @@ public class IntervalTreap {
         Node y = x.getParent();
         y.setRight(x.getLeft());
         if(x.getLeft() != null){
-            Node tempLeft = x.getLeft();
-            tempLeft.setParent(y);
+            //Node tempLeft = x.getLeft();
+            x.getLeft().setParent(y);
         }
         x.setParent(y.getParent());
         //Node tempParent = y.getParent();

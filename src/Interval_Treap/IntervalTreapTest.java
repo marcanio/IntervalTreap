@@ -313,7 +313,7 @@ class IntervalTreapTest {
         checkIntevalTreap(it);
 
         //Begin deletion
-        while(it.size!=0) {
+        while(it.getSize()!=0) {
             Node n = it.findLast();
             it.intervalDelete(n);
 
@@ -323,7 +323,7 @@ class IntervalTreapTest {
      */
     /**
      * Add a bunch of elements and delete them randomly. <p>
-
+     */
     @Test
     public void test14DeleteRandom() {
 
@@ -360,7 +360,7 @@ class IntervalTreapTest {
             checkIntevalTreap(it);
         }
     }
-     */
+
     /**
      * Add a thousand random nodes and check that getHeight() is correct
      */
@@ -671,7 +671,7 @@ class IntervalTreapTest {
         checkSize(it);
         checkPriorities(it);
         checkTreeStructure(it);
-        checkImax(it);
+        //checkImax(it);
     }
 
 
