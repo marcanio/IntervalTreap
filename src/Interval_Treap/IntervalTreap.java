@@ -125,7 +125,9 @@ public class IntervalTreap {
         }
         else if(z.getRight() == null && z.getLeft() != null){//only left child
             z.setIMax(Math.max(z.getLeft().getIMax(), z.getIMax()));
-        }else{}
+        }else{  //no children
+            z.setIMax(z.getInterv().getHigh());
+        }
     }
 
     /*Removes node z from the tree O(log(n))*/
