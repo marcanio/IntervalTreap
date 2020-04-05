@@ -136,63 +136,77 @@ public class IntervalTreap {
     /*Removes node z from the tree O(log(n))*/
     public void intervalDelete(Node z){
 
-        Node temp = root;
-        Node replace = z;
-        if(z.getRight() != null){
-            replace = minimum(z.getRight());
-        }
-
         int rightORleft = 2; // 1 - Right, 0 - left
+
         //Phase 1
         //Z has no left child
-        if(z.getLeft() == null){
-            if(z.getRight() != null){
-                rightORleft = 1;
-                if(z.getParent() != null){ // not root
-                    z.getRight().setParent(z.getParent());
-                }else{// Root
-                    z.getRight().setParent(null);
-                    root = z.getRight();
-                }
-            }
-            if(z.getParent() != null){
-                if(z.getParent().getRight() == z ){
+        if(z.getLeft() == null && z.getRight() != null){ //No left but right child
+
+            if(z.getParent() != null){ // not root
+                z.getRight().setParent(z.getParent());
+                if(z.getParent().getRight() == z ){  //Check what side of parent
                     z.getParent().setRight(z.getRight());
                 }else{
                     z.getParent().setLeft(z.getRight());
                 }
+            }else{// Root
+                z.getRight().setParent(null);
+                root = z.getRight();
             }
 
-        }else if(z.getRight() == null){ //Has left child
-            rightORleft = 0;
-            z.getLeft().setParent(z.getParent());
+        }else if(z.getRight() == null && z.getLeft() != null){ //Has left child but no right
 
-            if(z.getParent().getRight() == z ){
-                z.getParent().setRight(z.getLeft());
+            if(z.getParent() != null){//Not root
+                z.getLeft().setParent(z.getParent());
+                if(z.getParent().getRight() == z ){
+                    z.getParent().setRight(z.getLeft());
+                }else{
+                    z.getParent().setLeft(z.getLeft());
+                }
+
+            }else{//Root
+                z.getLeft().setParent(null);
+                root = z.getLeft();
+            }
+
+        }else if(z.getRight() != null && z.getLeft() != null){ //Z has two children
+            //Finds the successor
+            Node successor = minimum(z.getRight());
+
+
+            if(z.getParent() != null){//Not root
+                if(z.getParent().getRight() == z){ // Check side of parent
+                    z.getParent().setRight(successor);
+                }else{
+                    z.getParent().setLeft(successor);
+                }
+            }
+
+            z.getLeft().setParent(successor); //Parent child relationship on left side
+            successor.setLeft(z.getLeft());
+
+            if(z.getRight() != successor){ //Make sure suc. does not point to itself
+                z.getRight().setParent(successor);
+                successor.setRight(z.getRight());
+                successor.getParent().setLeft(null);
+            }
+
+            if(z.getParent() != null){
+                successor.setParent(z.getParent());
             }else{
-                z.getParent().setLeft(z.getLeft());
-            }
-        }else{ //Z has two children
-
-            if(z.getParent().getRight() == z){
-                rightORleft =1;
-                z.getParent().setRight(replace);
-            }else{
-                rightORleft =0;
-                z.getParent().setLeft(replace);
+                successor.setParent(null);
+                root = successor;
             }
 
-            z.getLeft().setParent(replace);
-
-            if(z.getRight() != replace){
-                z.getRight().setParent(replace);
+        }else{ //No children
+            if(z == root){
+                root = null;
+            } else if(z.getParent().getLeft() == z){
+                z.getParent().setLeft(null);
+            }else if(z.getParent().getRight() == z){
+                z.getParent().setRight(null);
             }
-            replace.setLeft(z.getLeft());
-            replace.setRight(z.getRight());
-            if(replace.getParent() != z){
-                replace.getParent().setLeft(null);
-            }
-            replace.setParent(z.getParent());
+            z = null;
         }
 
     }

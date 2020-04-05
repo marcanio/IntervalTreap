@@ -71,9 +71,9 @@ public class Main {
 
 
         System.out.println("Root: " + treap.root.interval.getLow());
-        treap.intervalDelete(node1);
-        treap.intervalDelete(node2);
-        treap.intervalDelete(node3);
+        //treap.intervalDelete(node1);
+        //treap.intervalDelete(node2);
+        //treap.intervalDelete(node3);
 
 
 
