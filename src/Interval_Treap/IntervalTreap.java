@@ -121,13 +121,13 @@ public class IntervalTreap {
     public void updateImax(Node z){
         if(z.getRight() != null && z.getLeft() != null){    //both children exist
             int zChildImax = Math.max(z.getRight().getIMax(), z.getLeft().getIMax());
-            z.setIMax(Math.max(z.getIMax(),zChildImax));
+            z.setIMax(Math.max(z.getInterv().getHigh(),zChildImax));
         }
         else if(z.getRight() != null && z.getLeft() == null) { //only right child
-            z.setIMax(Math.max(z.getRight().getIMax(), z.getIMax()));
+            z.setIMax(Math.max(z.getRight().getIMax(), z.getInterv().getHigh()));
         }
         else if(z.getRight() == null && z.getLeft() != null){//only left child
-            z.setIMax(Math.max(z.getLeft().getIMax(), z.getIMax()));
+            z.setIMax(Math.max(z.getLeft().getIMax(), z.getInterv().getHigh()));
         }else{  //no children
             z.setIMax(z.getInterv().getHigh());
         }

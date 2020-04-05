@@ -671,7 +671,7 @@ class IntervalTreapTest {
         checkSize(it);
         checkPriorities(it);
         checkTreeStructure(it);
-        //checkImax(it);
+        checkImax(it);
     }
 
 
