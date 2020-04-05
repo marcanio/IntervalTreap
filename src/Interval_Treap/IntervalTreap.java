@@ -251,13 +251,13 @@ public class IntervalTreap {
             tempRight.setParent(y);
         }
         x.setParent(y.getParent());
-        Node tempParent = y.getParent();
+        //Node tempParent = y.getParent();
         if(y.getParent() == null){
             this.root = x;
         }else if (y == y.getParent().getRight()){
-            tempParent.setRight(x);
+            y.getParent().setRight(x);
         }else{
-            tempParent.setLeft(x);
+            y.getParent().setLeft(x);
         }
         x.setRight(y);
         y.setParent(x);
