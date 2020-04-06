@@ -1,4 +1,9 @@
 package Interval_Treap;
+/**
+ *Interval Class
+ * @author Morgan Ambourn
+ * @author Eric Marcanio
+ */
 
 /*All methods should run in constant time and also using ints*/
 public class Interval {

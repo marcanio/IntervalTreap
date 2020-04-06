@@ -1,10 +1,15 @@
 package Interval_Treap;
-
+/**
+ *Interval Treap class
+ * @author Morgan Ambourn
+ * @author Eric Marcanio
+ */
 import org.jetbrains.annotations.NotNull;
 
 /*This is the big boi*/
 public class IntervalTreap {
     Node root;
+    int size =0;
     int globalRotate;
 
     /*Constructor*/
@@ -20,19 +25,20 @@ public class IntervalTreap {
     /*Returns the number of nodes in the treap*/
     public int getSize(){
 
-        Node temp = root;
-        return size(temp);
+        return findSize(this.root);
     }
 
-    /*Recursively count nodes in the tree */
-    public int size(Node temp){
-        if(temp == null){
-           return 0;
-        }else{
-            return(size(temp.getLeft()) + 1 + size(temp.getRight()));
-        }
-    }
+    /*Helper method to find the size recursiley*/
+    public int findSize(Node n){
+        if(n==null) return 0;
 
+        int ret = 1;
+
+        if(n.getLeft() != null) ret += findSize(n.getLeft());
+        if(n.getRight() != null) ret += findSize(n.getRight());
+
+        return ret;
+    }
 
     /*Returns the height*/
     public int getHeight(){
@@ -49,6 +55,7 @@ public class IntervalTreap {
         int rightH = height(temp.getRight());
 
         if(leftH > rightH){
+
             return leftH +1;
         }else{
             return rightH + 1;
@@ -100,14 +107,14 @@ public class IntervalTreap {
                 //update right child's imax
                 updateImax(right);
                 // update z's imax
-                updateImax(z);
+                //updateImax(z);
             }
             else if(leftOrRight == 1) {  //left
                 Node left = z.getLeft();
                 //update right child's imax
                 updateImax(left);
                 // update z's imax
-                updateImax(z);
+                //updateImax(z);
             }
         }
         //update Imax for nodes above inserted node
@@ -116,7 +123,7 @@ public class IntervalTreap {
             curr = curr.getParent();
             updateImax(curr);
         }
-
+        size++;
         }
     public void updateImax(Node z){
         if(z.getRight() != null && z.getLeft() != null){    //both children exist
@@ -137,37 +144,39 @@ public class IntervalTreap {
     public void intervalDelete(Node z){
 
         int rightORleft = 2; // 1 - Right, 0 - left
-
+        Node rotations = z;
         //Phase 1
         //Z has no left child
         if(z.getLeft() == null && z.getRight() != null){ //No left but right child
 
             if(z.getParent() != null){ // not root
-                z.getRight().setParent(z.getParent());
                 if(z.getParent().getRight() == z ){  //Check what side of parent
                     z.getParent().setRight(z.getRight());
                 }else{
                     z.getParent().setLeft(z.getRight());
                 }
+                z.getRight().setParent(z.getParent());
             }else{// Root
                 z.getRight().setParent(null);
                 root = z.getRight();
             }
-
+            rotations = z.getRight();
         }else if(z.getRight() == null && z.getLeft() != null){ //Has left child but no right
 
             if(z.getParent() != null){//Not root
-                z.getLeft().setParent(z.getParent());
+
                 if(z.getParent().getRight() == z ){
                     z.getParent().setRight(z.getLeft());
                 }else{
                     z.getParent().setLeft(z.getLeft());
                 }
-
+                z.getLeft().setParent(z.getParent());
             }else{//Root
                 z.getLeft().setParent(null);
                 root = z.getLeft();
             }
+
+            rotations = z.getLeft();// Node replacement location
 
         }else if(z.getRight() != null && z.getLeft() != null){ //Z has two children
             //Finds the successor
@@ -185,10 +194,21 @@ public class IntervalTreap {
             z.getLeft().setParent(successor); //Parent child relationship on left side
             successor.setLeft(z.getLeft());
 
-            if(z.getRight() != successor){ //Make sure suc. does not point to itself
-                z.getRight().setParent(successor);
+            if(z.getRight() == successor){
+                //successor.setRight(null);
+            }else{
+                //Sets successors right childs parent
+                if(successor.getRight() != null){
+                    successor.getRight().setParent(z.getRight());
+                    z.getRight().setLeft(successor.getRight());
+                }else{
+                    //If there is nothing right to the sucessor set to null
+                    z.getRight().setLeft(null);
+                }
+                //Sets up successors right child
                 successor.setRight(z.getRight());
-                successor.getParent().setLeft(null);
+                z.getRight().setParent(successor);
+
             }
 
             if(z.getParent() != null){
@@ -197,6 +217,8 @@ public class IntervalTreap {
                 successor.setParent(null);
                 root = successor;
             }
+
+            rotations = successor;
 
         }else{ //No children
             if(z == root){
@@ -207,9 +229,50 @@ public class IntervalTreap {
                 z.getParent().setRight(null);
             }
             z = null;
+            //Does not rotate
+            rotations.setRight(null);
+            rotations.setLeft(null);
         }
 
+        //Loop till we get to a leaf
+        int tempMin;
+        Node tempRotations = rotations;
+        while(rotations.getRight()!= null || rotations.getLeft() != null){ //Go until at a leaf node
+            if(rotations.getLeft() != null && rotations.getRight() != null){ //Has two children
+                tempMin = Math.min(rotations.getRight().priority,rotations.getLeft().priority);
+                if(tempMin < rotations.getPriority()){
+                    if(tempMin == rotations.getRight().priority){
+                        leftRotate(rotations.getRight());
+                    }else if(tempMin == rotations.getLeft().priority){
+                        rightRotate(rotations.getLeft());
+                    }
+                }else{
+                    break;
+                }
+            }else if(rotations.getRight() == null && rotations.getLeft() != null){ // Has left child
+                if(rotations.priority > rotations.getLeft().priority){
+                    rightRotate(rotations.getLeft());
+                }else{
+                    break;
+                }
+            }else if(rotations.getRight() != null && rotations.getLeft() == null){// has right child
+                if(rotations.priority > rotations.getRight().priority){
+                    leftRotate(rotations.getRight());
+                }else{
+                    break;
+                }
+            }
+        }
+
+        Node curr = rotations;
+        while(curr.getParent()!= null ){
+            curr = curr.getParent();
+            updateImax(curr);
+        }
+        size --;
     }
+
+    /*Find the last highest priority  */
 
     /*Updates the trees IMax after a delete*/
     public int DeleteUpdateImax(int imax, Node z){
@@ -241,16 +304,20 @@ public class IntervalTreap {
     /*Returns a reference to a node in a certain interval O(log(n))*/
     public Node intervalSearch(Interval i){
         Node temp = root;
-        while(temp != null){
-            if(temp.getInterv().equals(i)){
-                return temp;
-            }else if(temp.getInterv().getLow() < i.getLow()){
+        while(temp != null && !Overlap(temp, i)){
+            if(temp.getInterv().getLow() < i.getLow()){
                 temp = temp.getRight();
             }else{
                 temp = temp.getLeft();
             }
         }
         return temp;
+    }
+
+    /*Helper to check overlap*/
+    private boolean Overlap(Node x, Interval i)
+    {
+        return (i.getLow() <= x.getInterv().getHigh() && x.getInterv().getLow() <= i.getHigh());
     }
 
     /*Helper method to Right rotate*/
@@ -273,6 +340,7 @@ public class IntervalTreap {
         }
         x.setRight(y);
         y.setParent(x);
+        updateImax(x);
     }
 
     /*Helper method to Left rotate*/
@@ -294,5 +362,6 @@ public class IntervalTreap {
         }
         x.setLeft(y);
         y.setParent(x);
+        updateImax(x);
     }
 }

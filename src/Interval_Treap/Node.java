@@ -1,4 +1,9 @@
 package Interval_Treap;
+/**
+ *Node object
+ * @author Morgan Ambourn
+ * @author Eric Marcanio
+ */
 import java.util.Random;
 import java.lang.*;
 /*Represents the actual nodes in the tree*/
@@ -24,6 +29,10 @@ public class Node {
         this.imax = interval.getHigh();
 
 
+    }
+    /*TESTING PURPOSES ONLY*/
+    public void setPriority(int num){
+        this.priority = num;
     }
 
     /*Returns the parent of the node*/
